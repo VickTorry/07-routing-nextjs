@@ -16,16 +16,24 @@ export default function NoteList({ notes }: NoteListProps) {
 
    // NOTE: Defines mutation inside the component
    const mutation = useMutation({
-     mutationFn: deleteNote,
-     onSuccess: () => {
-       queryClient.invalidateQueries({ queryKey: ['notes'] });
-     },
-   });
+  mutationFn: deleteNote,
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['notes'] });
+  },
+  onError: (err) => {
+    console.error('❌ Delete failed:', err);
+    alert('This note could not be deleted. It may already be gone.');
+  },
+});
+
  
    const handleDelete = (id: number) => {
      mutation.mutate(id); // NOTE: Triggers API call
-   };
+  };
+  console.log('[NoteList] Rendering notes:', notes.map(n => n.id));
+
   return (
+    
     <ul className={css.list}>
       {notes.map(note => (
         <li key={note.id} className={css.listItem}>
