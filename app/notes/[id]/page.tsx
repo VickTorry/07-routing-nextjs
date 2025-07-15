@@ -15,6 +15,7 @@ export default async function NoteDetails({ params }: Props) {
     queryKey: ['note', noteId],
     queryFn: () => fetchNoteById(noteId),
   })
+  console.log("🔥 Deployed version test")
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
