@@ -6,9 +6,7 @@ export interface FetchNotesResponse {
   totalPages: number;
 }
 
-/**
- * Fetch notes with optional search and tag filter.
- */
+
 export const fetchNotes = async (
   page = 1,
   perPage = 12,
