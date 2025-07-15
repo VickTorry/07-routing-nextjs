@@ -3,11 +3,12 @@ import NotePreview from '@/components/NotePreview/NotePreview';
 import Modal from '@/components/Modal/Modal';
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>
 }
 
 export default async function NoteModal({ params }: Props) {
-  const noteId = Number(params.id);
+  const { id } = await params;
+  const noteId = Number(id);
   const note = await fetchNoteById(noteId);
 
   return (
