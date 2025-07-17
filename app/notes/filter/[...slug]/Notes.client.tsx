@@ -15,24 +15,30 @@ import Modal from '@/components/Modal/Modal';
 import NoteList from '@/components/NoteList/NoteList';
 import Loader from '@/components/Loader/Loader';
 import ErrorMessage from '@/components/ErrorMessage/ErrorMessage';
+import { FetchNotesResponse } from '@/lib/api';
 
 const PER_PAGE = 12;
 
 type Props = {
   tag?: string;
+  initialSearch: string;
+  initialData: FetchNotesResponse;
 };
 
-export default function NotesClient({ tag }: Props) {
+export default function NotesClient({ tag, initialSearch, initialData }: Props) {
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchDebounced] = useDebounce(search, 500);
+    const shouldUseInitialData = page === 1 && searchDebounced === initialSearch;
+
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['notes', tag, searchDebounced, page],
     queryFn: () => fetchNotes(page, PER_PAGE, searchDebounced, tag),
     placeholderData: keepPreviousData,
     refetchOnMount: false,
+    initialData: shouldUseInitialData ? initialData : undefined,
   });
 
   const handleSearch = (value: string) => {

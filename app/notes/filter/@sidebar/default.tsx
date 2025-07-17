@@ -1,18 +1,12 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
-import { getTags } from '@/lib/api'; // adjust path if needed
+
 import Link from 'next/link';
 import css from './NotesSidebar.module.css';
 
 export default function SidebarNotes() {
-  const { data: tags = [], isLoading, error } = useQuery({
-    queryKey: ['tags'],
-    queryFn: getTags,
-  });
+  const tags = ['All', 'Todo', 'Work', 'Personal', 'Meeting', 'Shopping']
 
-  if (isLoading) return null;
-  if (error) return <div>Error loading tags</div>;
 
   return (
     <ul className={css.menuList}>
