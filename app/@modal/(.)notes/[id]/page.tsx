@@ -4,9 +4,10 @@ import { fetchNoteById } from '@/lib/api';
 import Modal from '@/components/Modal/Modal';
 import NotePreview from '@/app/@modal/(.)notes/[id]/NotePreview.client';
 
-interface Props {
-  params: { id: string };
-}
+type Props = {
+  params: Promise<{ id: string }>; 
+};
+
 
 export default async function NoteDetails({ params }: Props) {
 
