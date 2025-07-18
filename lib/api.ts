@@ -94,17 +94,6 @@ export const deleteNote = async (id: number): Promise<Note> => {
  * Get the available tags manually (since backend does not expose a tags endpoint).
  */
 export const getTags = async (): Promise<string[]> => {
-  try {
-    const response = await fetchNotes(1, 20); // smaller perPage
-    const notes = response.notes;
-    const validTags = ['Work', 'Personal', 'Meeting', 'Shopping', 'Todo'];
-
-    const tags = Array.from(new Set(notes.map(note => note.tag)))
-                      .filter(tag => validTags.includes(tag));
-
-    return ['All', ...tags];
-  } catch (error) {
-    console.error('❌ getTags failed:', error);
-    throw error;
-  }
+  // Static tags as required by the project
+  return ['All', 'Work', 'Personal', 'Meeting', 'Shopping', 'Todo'];
 };
